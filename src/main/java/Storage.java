@@ -62,12 +62,14 @@ public class Storage {
 
             lineNumber++;
         }
-        Ui.printDivider();
+        Ui.printlnTab("Done reading DukeData/data.txt");
+
         if (hasError) {
+            Ui.printlnTab("");
             Ui.printlnTab("1. Enter 'bye' to exit program to correct data file " + dataPath);
             Ui.printlnTab("2. add, do or delete tasks to OVERWRITE all invalid data!");
-            Ui.printDivider();
         }
+        Ui.printDivider();
     }
 
     //

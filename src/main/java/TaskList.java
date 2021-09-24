@@ -202,6 +202,47 @@ public class TaskList {
         }
     }
 
+
+
+    public void findTasksPlusException(String userInput) {
+        try {
+            findTasks(userInput);
+        } catch (BlankDescriptionException e) {
+            Ui.printlnTab("☹ OOPS!!! Please enter some keywords to search your task list.");
+            Ui.printDivider();
+        }
+    }
+
+    private void findTasks(String userInput) throws BlankDescriptionException {
+        if (tasks.isEmpty()) {
+            Ui.printlnTab("Your task list is empty!");
+
+        } else {
+            String findKeyPhrase = Parser.stripCommandWord(CommandEnum.FIND, userInput);
+            String findKeyPhraseLowerCase = findKeyPhrase.toLowerCase();
+            if (findKeyPhrase.isBlank()) {
+                throw new BlankDescriptionException();
+            }
+
+            String foundTasksString = "";
+            for (int i = 0; i < tasks.size(); i++) {
+                String taskDescriptionLowerCase = tasks.get(i).getDescription().toLowerCase();
+                if (taskDescriptionLowerCase.contains(findKeyPhraseLowerCase)) {
+                    foundTasksString += String.format("%d.%s", (i + 1), tasks.get(i)) + "\n\t";
+                }
+            }
+            if (foundTasksString.isBlank()) {
+                Ui.printlnTab("\"" + findKeyPhrase + "\"" + " not found in your list!");
+
+            } else {
+                Ui.printlnTab("Here are the matching tasks in your list:");
+                Ui.printlnTab(foundTasksString);
+            }
+        }
+        Ui.printDivider();
+    }
+
+
     /**
      * List out all tasks from tasks list
      */
