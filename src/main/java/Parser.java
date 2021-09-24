@@ -8,6 +8,7 @@ public class Parser {
     private static final int DEADLINE_START_INDEX = 8;
     private static final int DONE_NUMBER_INDEX = 4;
     private static final int DELETE_NUMBER_INDEX = 6;
+    private static final int FIND_START_INDEX = 4;
     private static final String COMMAND_BYE = "bye";
     private static final String COMMAND_DELETE = "delete";
     private static final String COMMAND_LIST = "list";
@@ -17,6 +18,7 @@ public class Parser {
     private static final String COMMAND_EVENT = "event";
     private static final String COMMAND_HELP = "help";
     private static final String COMMAND_HELP_SHORT = "h";
+    private static final String COMMAND_FIND = "find";
     private static final Scanner in = new Scanner(System.in);
     private static String userInput;
 
@@ -49,6 +51,9 @@ public class Parser {
             } else if (userInput.startsWith(COMMAND_DELETE)) {
                 Duke.taskList.doneOrDeleteTaskPlusException(userInput, COMMAND_DELETE);
 
+            } else if (userInput.startsWith(COMMAND_FIND)) {
+                Duke.taskList.findTasksPlusException(userInput);
+
             } else if (userInput.equals(COMMAND_BYE)) {
                 Ui.printlnTab("Bye. Hope to see you again soon!");
                 Ui.printDivider();
@@ -66,8 +71,9 @@ public class Parser {
                 Ui.printlnTab("4. event [TASK DESCRIPTION] /at [DATE/TIME]");
                 Ui.printlnTab("5. delete [TASK NUMBER]");
                 Ui.printlnTab("6. done [TASK NUMBER]");
-                Ui.printlnTab("7. h OR help");
-                Ui.printlnTab("8. bye");
+                Ui.printlnTab("7. find [PART OF TASK DESCRIPTION]");
+                Ui.printlnTab("8. h OR help");
+                Ui.printlnTab("9. bye");
                 Ui.printDivider();
 
             } else { //Invalid inputs
@@ -99,6 +105,9 @@ public class Parser {
             break;
         case DELETE:
             strippedUserInput = userInput.substring(DELETE_NUMBER_INDEX).strip();
+            break;
+        case FIND:
+            strippedUserInput = userInput.substring(FIND_START_INDEX).strip();
             break;
         }
 
